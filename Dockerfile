@@ -34,7 +34,8 @@ RUN apk add --no-cache \
     python3-dev \
     py3-pip \
     nodejs \
-    npm
+    npm \
+    nginx
 
 # Install Bun (required for oh-my-opencode)
 RUN if ! command -v bun > /dev/null 2>&1; then \
@@ -73,10 +74,11 @@ RUN npm install -g \
 RUN bunx oh-my-opencode install --yes 2>/dev/null || npm exec -y oh-my-opencode install --yes 2>/dev/null || true
 
 # Create workspace and config directories
-RUN mkdir -p /workspace /root/.config/opencode /root/.opencode
+RUN mkdir -p /workspace /root/.config/opencode /root/.opencode /run/nginx
 
 # Copy configuration files
 COPY config/opencode.json /root/.config/opencode/opencode.json
+COPY config/nginx.conf /etc/nginx/http.d/opencode.conf
 COPY scripts/entrypoint.sh /entrypoint.sh
 
 # Make entrypoint executable
@@ -85,12 +87,12 @@ RUN chmod +x /entrypoint.sh
 # Set working directory
 WORKDIR /workspace
 
-# Expose OpenCode server port
-EXPOSE 4096
+# Expose ports (4097 = nginx proxy, 4096 = opencode internal)
+EXPOSE 4097
 
-# Health check
+# Health check through nginx proxy
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:4096/health || exit 1
+    CMD curl -f http://localhost:4097/health || exit 1
 
 # Labels
 LABEL org.opencontainers.image.title="OpenCode AgentAI"
@@ -99,4 +101,4 @@ LABEL org.opencontainers.image.source="https://github.com/sst/opencode"
 
 # Entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["opencode", "serve", "--hostname", "0.0.0.0", "--port", "4096"]
+CMD ["opencode", "serve", "--hostname", "127.0.0.1", "--port", "4096"]

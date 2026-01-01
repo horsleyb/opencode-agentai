@@ -55,11 +55,11 @@ services:
 
     # Health check
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4096/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:4097/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 10s
+      start_period: 15s
 
     # Interactive mode for TUI
     stdin_open: true
