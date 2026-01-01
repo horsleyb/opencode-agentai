@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  opencode:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: opencode-agentai
+
+    # Use host network to access local LLM services
+    # Alternative: Use extra_hosts for specific endpoints
+    network_mode: host
+
+    # Environment variables
+    env_file:
+      - .env
+
+    environment:
+      # OpenCode settings
+      - OPENCODE_SERVER_PORT=${OPENCODE_SERVER_PORT:-4096}
+
+      # LLM Router (unified gateway - only backend)
+      - LLM_ROUTER_URL=${LLM_ROUTER_URL:-http://localhost:8000}
+
+      # MCP Server API Keys
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - EXA_API_KEY=${EXA_API_KEY:-}
+
+    volumes:
+      # Project workspace
+      - ./workspace:/workspace
+
+      # OpenCode configuration (persisted)
+      - ./config:/root/.config/opencode:ro
+
+      # OpenCode state and cache
+      - opencode-state:/root/.opencode
+
+      # SSH keys for Git operations
+      - ~/.ssh:/root/.ssh:ro
+
+      # Git config
+      - ~/.gitconfig:/root/.gitconfig:ro
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 2G
+
+    # Restart policy
+    restart: unless-stopped
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4096/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    # Interactive mode for TUI
+    stdin_open: true
+    tty: true
+
+# Named volumes for persistence
+volumes:
+  opencode-state:
+    driver: local
+
+# Optional: Bridge network if not using host mode
+# networks:
+#   opencode-net:
+#     driver: bridge

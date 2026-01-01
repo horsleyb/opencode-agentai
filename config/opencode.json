@@ -1,0 +1,92 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  "model": "claude-sonnet-4-5",
+  "small_model": "claude-haiku-4-5",
+
+  "server": {
+    "port": 4096,
+    "hostname": "0.0.0.0",
+    "mdns": true
+  },
+
+  "provider": {
+    "openai-compatible": {
+      "options": {
+        "baseURL": "http://localhost:8000/v1",
+        "timeout": 600000
+      }
+    }
+  },
+
+  "tui": {
+    "scroll_speed": 3,
+    "scroll_acceleration": {
+      "enabled": true
+    },
+    "diff_style": "auto"
+  },
+
+  "tools": {
+    "write": true,
+    "edit": true,
+    "bash": true,
+    "read": true,
+    "grep": true,
+    "glob": true,
+    "list": true,
+    "lsp": true,
+    "patch": true,
+    "skill": true,
+    "todowrite": true
+  },
+
+  "permission": {
+    "edit": "ask",
+    "bash": "ask"
+  },
+
+  "lsp": false,
+
+  "mcp": {
+    "filesystem": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "/workspace"],
+      "enabled": true
+    },
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "environment": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "enabled": true
+    },
+    "memory": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-memory"],
+      "enabled": true
+    },
+    "sequential-thinking": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "enabled": true
+    }
+  },
+
+  "watcher": {
+    "ignore": [
+      "node_modules/**",
+      "dist/**",
+      ".git/**",
+      "__pycache__/**",
+      "*.pyc",
+      "target/**",
+      "build/**"
+    ]
+  },
+
+  "autoupdate": false,
+
+  "theme": "opencode"
+}
