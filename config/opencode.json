@@ -1,8 +1,10 @@
 {
   "$schema": "https://opencode.ai/config.json",
 
-  "model": "anthropic/claude-3-5-sonnet-20241022",
-  "small_model": "anthropic/claude-3-5-haiku-20241022",
+  "model": "ollama/qwen2.5:7b",
+  "small_model": "ollama/qwen2.5:3b",
+
+  "disabled_providers": ["anthropic", "google", "amazon-bedrock", "azure"],
 
   "server": {
     "port": 4096,
@@ -11,41 +13,26 @@
   },
 
   "provider": {
-    "openai-compatible": {
+    "openai": {
       "options": {
-        "baseURL": "http://localhost:8000/v1",
-        "timeout": 600000
+        "baseURL": "http://localhost:8000/v1"
       }
     }
   },
 
   "tui": {
     "scroll_speed": 3,
-    "scroll_acceleration": {
-      "enabled": true
-    },
+    "scroll_acceleration": { "enabled": true },
     "diff_style": "auto"
   },
 
   "tools": {
-    "write": true,
-    "edit": true,
-    "bash": true,
-    "read": true,
-    "grep": true,
-    "glob": true,
-    "list": true,
-    "lsp": true,
-    "patch": true,
-    "skill": true,
-    "todowrite": true
+    "write": true, "edit": true, "bash": true, "read": true,
+    "grep": true, "glob": true, "list": true, "lsp": true,
+    "patch": true, "skill": true, "todowrite": true
   },
 
-  "permission": {
-    "edit": "ask",
-    "bash": "ask"
-  },
-
+  "permission": { "edit": "ask", "bash": "ask" },
   "lsp": false,
 
   "mcp": {
@@ -53,40 +40,9 @@
       "type": "local",
       "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "/workspace"],
       "enabled": true
-    },
-    "github": {
-      "type": "local",
-      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
-      "environment": {
-        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
-      },
-      "enabled": true
-    },
-    "memory": {
-      "type": "local",
-      "command": ["npx", "-y", "@modelcontextprotocol/server-memory"],
-      "enabled": true
-    },
-    "sequential-thinking": {
-      "type": "local",
-      "command": ["npx", "-y", "@modelcontextprotocol/server-sequential-thinking"],
-      "enabled": true
     }
   },
 
-  "watcher": {
-    "ignore": [
-      "node_modules/**",
-      "dist/**",
-      ".git/**",
-      "__pycache__/**",
-      "*.pyc",
-      "target/**",
-      "build/**"
-    ]
-  },
-
   "autoupdate": false,
-
   "theme": "opencode"
 }

@@ -63,12 +63,13 @@ RUN apk add --no-cache openjdk${JAVA_VERSION}-jdk
 ENV JAVA_HOME="/usr/lib/jvm/java-${JAVA_VERSION}-openjdk"
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
-# Install MCP servers globally
+# Install MCP servers and AI SDK packages globally
 RUN npm install -g \
     @modelcontextprotocol/server-filesystem \
     @modelcontextprotocol/server-github \
     @modelcontextprotocol/server-memory \
-    @modelcontextprotocol/server-sequential-thinking
+    @modelcontextprotocol/server-sequential-thinking \
+    @ai-sdk/openai-compatible
 
 # Install oh-my-opencode
 RUN bunx oh-my-opencode install --yes 2>/dev/null || npm exec -y oh-my-opencode install --yes 2>/dev/null || true

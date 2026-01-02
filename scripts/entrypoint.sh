@@ -66,6 +66,10 @@ test_llm_connectivity() {
 }
 
 start_nginx() {
+    # Copy custom nginx config if exists
+    if [[ -f /root/.config/opencode/nginx.conf ]]; then
+        cp /root/.config/opencode/nginx.conf /etc/nginx/http.d/opencode.conf
+    fi
     log_step "8/8" "Starting nginx proxy..."
     mkdir -p /run/nginx
     nginx && log_success "nginx on :4097 -> OpenCode :4096" || log_error "nginx failed"
