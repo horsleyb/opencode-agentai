@@ -38,7 +38,7 @@ OpenCode AgentAI provides a production-ready, Docker-based development environme
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/horsleyb/opencode-agentai.git
 cd opencode-agentai
 
 # Copy environment template
@@ -238,7 +238,7 @@ The LLM Router can route to multiple backends:
 - **Docker Model Runner** (CPU) - Port 12434
 - **Cloud APIs** (Anthropic, OpenAI, etc.)
 
-Configure backends in your LLM Router instance. See [llm-router documentation](https://github.com/your-org/llm-router).
+Configure backends in your LLM Router instance. See [llm-router documentation](https://github.com/horsleyb/llm-router).
 
 ## Usage Examples
 
@@ -293,8 +293,8 @@ docker exec -it opencode-agentai opencode
 ```bash
 # Work on code in the workspace directory
 cd workspace
-git clone your-repo
-cd your-repo
+git clone https://github.com/your-username/your-project.git
+cd your-project
 
 # Start OpenCode in project context
 opencode
@@ -545,7 +545,7 @@ Check individual component licenses for details.
 - [OpenCode Documentation](https://opencode.ai/docs)
 - [Model Context Protocol](https://modelcontextprotocol.io)
 - [oh-my-opencode Guide](https://github.com/code-yeongyu/oh-my-opencode)
-- [LLM Router](https://github.com/your-org/llm-router)
+- [LLM Router](https://github.com/horsleyb/llm-router)
 
 ## Support
 
