@@ -8,6 +8,9 @@ FROM ghcr.io/sst/opencode:latest AS base
 ENV GO_VERSION=1.22.5
 ENV JAVA_VERSION=21
 
+# Install glibc compatibility for bun-pty (Alpine uses musl, bun-pty needs glibc)
+RUN apk add --no-cache gcompat libc6-compat
+
 # Install system dependencies (Alpine uses apk)
 RUN apk add --no-cache \
     build-base \
@@ -35,7 +38,8 @@ RUN apk add --no-cache \
     py3-pip \
     nodejs \
     npm \
-    nginx
+    nginx \
+    libstdc++
 
 # Install Bun (required for oh-my-opencode)
 RUN if ! command -v bun > /dev/null 2>&1; then \

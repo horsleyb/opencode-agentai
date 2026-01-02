@@ -16,6 +16,10 @@ services:
       - .env
 
     environment:
+      # Terminal settings for TUI support
+      - TERM=xterm-256color
+      - COLORTERM=truecolor
+
       # OpenCode settings
       - OPENCODE_SERVER_PORT=${OPENCODE_SERVER_PORT:-4097}
 
