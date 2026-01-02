@@ -1,0 +1,46 @@
+# Environment and secrets
+.env
+*.env.local
+
+# Workspace (user projects)
+workspace/
+
+# OpenCode state and cache
+.opencode/
+*.log
+
+# Claude Code
+.claude/
+
+# Docker
+*.tar
+docker-compose.override.yml
+
+# OS files
+.DS_Store
+Thumbs.db
+nul
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Test files
+Dockerfile.test
+*.test.json
+
+# Node modules (if any local dev)
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
